@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<config version="0.3">
+    <general>
+        <size value="1024x768"/>
+        <fps value="15"/>
+        <rate value="1500"/>
+        <min value="true"/>
+        <mouse value="false"/>
+        <aero value="false"/>
+        <desktopMin value="false"/>
+        <savefile value="true"/>
+        <savepath value="D:/video"/>
+    </general>
+    <advanced>
+        <encoder value="h264"/>
+        <psy value="zerolatency"/>
+        <profile value="main"/>
+        <keyframe value="6"/>
+        <threadcount value="8"/>
+        <mode value="CBR"/>
+        <Bkeyframe value="false"/>
+        <quality value="35"/>
+        <audiodevice value="-1"/>
+        <audioencoder value="AAC"/>
+        <channel value="Stereo"/>
+        <samplingrate value="0"/>
+        <audiorate value="96"/>
+        <url value="rtmp://172.16.9.241/live/hello1"/>
+    </advanced>
+</config>

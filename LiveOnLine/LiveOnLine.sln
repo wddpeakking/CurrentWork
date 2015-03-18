@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LiveOnLine", "LiveOnLine\LiveOnLine.vcxproj", "{57275280-3872-441B-A49F-6DCE8A517C58}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "当面淘直播客户端v_0.1", "当面淘直播客户端v_0.1\当面淘直播客户端v_0.1.vdproj", "{6D9A04C8-D95E-476A-8DC6-6507CB3EF55B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{57275280-3872-441B-A49F-6DCE8A517C58}.Debug|Win32.ActiveCfg = Debug|Win32
+		{57275280-3872-441B-A49F-6DCE8A517C58}.Debug|Win32.Build.0 = Debug|Win32
+		{57275280-3872-441B-A49F-6DCE8A517C58}.Release|Win32.ActiveCfg = Release|Win32
+		{57275280-3872-441B-A49F-6DCE8A517C58}.Release|Win32.Build.0 = Release|Win32
+		{6D9A04C8-D95E-476A-8DC6-6507CB3EF55B}.Debug|Win32.ActiveCfg = Debug
+		{6D9A04C8-D95E-476A-8DC6-6507CB3EF55B}.Release|Win32.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		Qt5Version = msvc2010_opengl
+	EndGlobalSection
+EndGlobal
