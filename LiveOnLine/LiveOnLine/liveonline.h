@@ -35,8 +35,6 @@ public:
 		void OnActionStartorEndRtmp();	//响应开始推流
 		void OnActionSetting();			//设置
 
-		void OnShowCurrentTime(const QString&);		//显示当前时间
-
 		void MouseMovePos(const QPoint& pt);
 
 
@@ -45,7 +43,7 @@ private:
 
 	void Update(bool b);	//更新界面
 
-	void ShowCurrentTime(const QString& str){m_pLabelMsg->setText(str);};
+	//void ShowCurrentTime(const QString& str){m_pLabelMsg->setText(str);};
 
 
 private:
@@ -58,12 +56,13 @@ private:
 	bool m_bSnedToRtmp;						//发送、停止推流
 	LkButton* m_pPushToRtmpBtn;				//推送，停止按钮	
 	LkButton* m_pBtnSetting;				//设置按钮
-	QLabel* m_pLabelMsg;					//显示消息
+	//QLabel* m_pLabelMsg;					//显示消息
 
 	LkSendTime* m_pCurrentSendTime;			//获取发送时间
 	QString m_strSentStartTime;				//开始发送时间
 
 	QTopWidget* m_pTopWidget;				//上部标题栏
+	QWidget* m_pBottomWidget;				//上部标题栏
 
 };
 

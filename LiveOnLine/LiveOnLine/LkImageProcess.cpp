@@ -65,7 +65,7 @@ void LkImageProcessWidget::paintEvent(QPaintEvent *event)
 	p.setRenderHint(QPainter::SmoothPixmapTransform);
 
 	// back ground
-	p.fillRect(rect(), QBrush(QColor(20, 20, 20)));
+	p.fillRect(rect(), QBrush(QColor(0, 0, 0)));
 
 	  //  element draw
 	for (int i = 0; i < m_sources.size(); ++i) {

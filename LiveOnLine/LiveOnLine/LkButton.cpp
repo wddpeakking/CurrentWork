@@ -31,13 +31,24 @@ LkButton::LkButton(QPixmap image,QColor color,QWidget* widget)
 	m_colorNormal = color;
 }
 
+LkButton::LkButton(QPixmap imageNormal,QPixmap imagePress,QWidget* widget)
+	:QLabel(widget)
+{
+	Init();
+	this->setPixmap(imageNormal);
+	m_imageNormal = imageNormal;
+	m_imagePress = imagePress;
+	this->setStyleSheet(GetStyle(m_colorNormal));
+}
+
 void LkButton::Init()
 {
 	this->setMouseTracking(true);
-	m_colorNormal = g_LeftColor;
-	m_colorPress = QColor(250,200,30);
+	m_colorNormal = g_BtnNormalColor;
+	m_colorPress = QColor(0,0,0);
 	this->setAutoFillBackground(true);
 	this->setAlignment(Qt::AlignCenter);	
+	this->setAutoFillBackground(true);
 }
 LkButton::~LkButton(void)
 {
@@ -57,14 +68,11 @@ void LkButton::mouseReleaseEvent(QMouseEvent *e)
 }
 void LkButton::enterEvent(QEvent *e)
 {
-	this->setStyleSheet(GetStyle(m_colorPress));
+	//this->setStyleSheet(GetStyle(m_colorPress));
+	this->setPixmap(m_imagePress);
 }
 void LkButton::leaveEvent(QEvent *e)
 {
-	this->setStyleSheet(GetStyle(m_colorNormal));
+	//this->setStyleSheet(GetStyle(m_colorNormal));
+	this->setPixmap(m_imageNormal);
 }
-
-//QString LkButton::GetStyle(QColor color)
-//{
-//	return QString("background-color:rgb(%1,%2,%3)").arg(color.red()).arg(color.green()).arg(color.blue());
-//}

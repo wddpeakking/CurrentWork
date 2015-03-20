@@ -10,11 +10,13 @@ static const QString g_strConfigName = "/config.xml";
 
 
 //自定义界面颜色
-static QColor g_MainColor = QColor(150,150,150);
+static QColor g_MainColor = QColor(0,0,0);
 static QColor g_LeftColor = QColor(60,80,100);
-static QColor g_MidleColor = QColor(80,80,80);
-static QColor g_BottomColor = QColor(115,155,155); //QColor(140,200,100);
-static QColor g_TopColor = QColor(115,155,155);//QColor(140,200,100);
+static QColor g_MidleColor = QColor(0,0,0);
+static QColor g_BottomColor = QColor(0,0,0); //QColor(140,200,100);
+static QColor g_TopColor = QColor(40,40,40);//QColor(140,200,100);
+static QColor g_BtnNormalColor = QColor(40,40,40);//QColor(140,200,100);
+
 
 static	QString GetStyle(QColor color)
 {

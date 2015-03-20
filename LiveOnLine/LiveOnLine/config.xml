@@ -3,12 +3,12 @@
     <general>
         <size value="1024x768"/>
         <fps value="15"/>
-        <rate value="1500"/>
-        <min value="true"/>
+        <rate value="800"/>
+        <min value="false"/>
         <mouse value="false"/>
         <aero value="false"/>
         <desktopMin value="false"/>
-        <savefile value="true"/>
+        <savefile value="false"/>
         <savepath value="D:/video"/>
     </general>
     <advanced>
@@ -25,6 +25,6 @@
         <channel value="Stereo"/>
         <samplingrate value="0"/>
         <audiorate value="96"/>
-        <url value="rtmp://172.16.9.241/live/hello1"/>
+        <url value="rtmp://push.facebuy.cn/live/hello"/>
     </advanced>
 </config>

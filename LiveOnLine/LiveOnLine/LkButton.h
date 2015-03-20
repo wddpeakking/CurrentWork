@@ -15,6 +15,7 @@ public:
 	LkButton(QWidget* widget = 0);
 	LkButton(QPixmap image,QWidget* widget = 0);
 	LkButton(QPixmap image,QColor color,QWidget* widget = 0);
+	LkButton(QPixmap imageNormal,QPixmap imagePress,QWidget* widget = 0);
 
 	~LkButton(void);
 
@@ -29,13 +30,31 @@ public:
 	void SetNormalImage(QPixmap image){m_imageNormal = image;};
 	void SetPressImage(QPixmap image){m_imagePress = image;};
 
+	void UpdateNormalImage(QPixmap image)
+	{
+		m_imageNormal = image;
+		this->setPixmap(image);
+	};
+	void UpdatePressImage(QPixmap image)
+	{
+		m_imagePress = image;
+		this->setPixmap(image);
+	};
+	void UpdateImage(QPixmap image)
+	{
+		this->setPixmap(image);
+	};
+	void UpdateImage()
+	{
+		this->setPixmap(m_imageNormal);
+	};
+
 
 signals:
 	void pressWidget();
 	void releaseWidget();
 
 private:
-	//QString GetStyle(QColor color);
 	void Init();
 
 private:
