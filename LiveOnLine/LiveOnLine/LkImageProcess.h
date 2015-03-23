@@ -3,20 +3,11 @@
 
 #include <QWidget>
 #include <QTimer>
-
-#include "LkSourceAbstract.h"
 #include <QThread>
 
-class DrawImage;
-struct ImageTh
-{
-	QRect pRect;
-	QImage pImage;
-	ImageTh()
-	{
-		pRect =  QRect(0,0,0,0);
-	}
-};
+#include "LkSourceAbstract.h"
+#include "LkConfigOpt.h"
+
 class LkImageProcessWidget : public QWidget
 {
     Q_OBJECT
@@ -49,6 +40,19 @@ private slots:
 private:
     void updateSources();
     int getPairIndex(SourcePair *pair);
+
+	inline QRect GetRect(QRect rect,double dX,double dY)
+	{
+		return QRect(rect.x()*dX,rect.y()*dY,rect.width()*dX,rect.height()*dY);
+	}
+	inline double GetDx()
+	{
+		return rect().width()/static_cast<double>(LkConfigOpt::Instance()->size_Lk_Encoder_Scale.width());
+	}
+	inline double GetDy()
+	{
+		return rect().height()/static_cast<double>(LkConfigOpt::Instance()->size_Lk_Encoder_Scale.height());
+	}
 
 private:
     QSize m_parentSize;

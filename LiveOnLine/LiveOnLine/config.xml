@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<config version="0.3">
+<config version="0.4">
     <general>
-        <size value="1024x768"/>
-        <fps value="15"/>
-        <rate value="800"/>
+        <size value="1920x1080"/>
+        <fps value="40"/>
+        <rate value="2000"/>
         <min value="false"/>
         <mouse value="false"/>
         <aero value="false"/>
@@ -15,16 +15,16 @@
         <encoder value="h264"/>
         <psy value="zerolatency"/>
         <profile value="main"/>
-        <keyframe value="6"/>
+        <keyframe value="10"/>
         <threadcount value="8"/>
         <mode value="CBR"/>
         <Bkeyframe value="false"/>
         <quality value="35"/>
         <audiodevice value="-1"/>
-        <audioencoder value="AAC"/>
+        <audioencoder value="MP3"/>
         <channel value="Stereo"/>
         <samplingrate value="0"/>
         <audiorate value="96"/>
-        <url value="rtmp://push.facebuy.cn/live/hello"/>
+        <url value="rtmp://192.168.41.234/live/hello1"/>
     </advanced>
 </config>

@@ -7,13 +7,11 @@
 #include <QResizeEvent>
 
 #include "LkLog.h"
-
 #include "LkImageProcessThread.h"
 #include "LkUtil.h"
 #include "LkDefine.h"
 
 QMutex mutex;
-ImageTh* pixmap = NULL;
 LkImageProcessWidget::LkImageProcessWidget(QWidget *parent)
     : QWidget(parent)
     , m_activePair(NULL)
@@ -91,7 +89,9 @@ void LkImageProcessWidget::paintEvent(QPaintEvent *event)
 			cvReleaseImageHeader(&dstImage);
 		}
 		qimage = QImage((uchar*)image.data, image.width, image.height, QImage::Format_RGB888);
-		p.drawPixmap(pair.rect, QPixmap::fromImage(qimage));
+
+		QRect rectD = GetRect(pair.rect,GetDx(),GetDy());
+		p.drawPixmap(rectD, QPixmap::fromImage(qimage));
 		// p.drawImage(pair.rect, qimage);
 	}
 
@@ -103,12 +103,16 @@ void LkImageProcessWidget::paintEvent(QPaintEvent *event)
 		pen.setWidth(2);
 		pen.setStyle(Qt::DotLine);
 		p.setPen(pen);
-		p.drawRect(m_activePair->rect);
+		QRect rectD = GetRect(m_activePair->rect,GetDx(),GetDy());
+		p.drawRect(rectD);
+		//p.drawRect(m_activePair->rect);
 
-		QRect topLeftRect(m_activePair->rect.x(), m_activePair->rect.y(), 8, 8);
+		QRect topLeftRect(rectD.x(), rectD.y(), 8, 8);
+		//QRect topLeftRect(m_activePair->rect.x(), m_activePair->rect.y(), 8, 8);
 		p.fillRect(topLeftRect, QBrush(Qt::red));
 
-		QRect bottomRightRect(m_activePair->rect.bottomRight().x(), m_activePair->rect.bottomRight().y(), -8, -8);
+		QRect bottomRightRect(rectD.bottomRight().x(), rectD.bottomRight().y(), -8, -8);
+		//QRect bottomRightRect(m_activePair->rect.bottomRight().x(), m_activePair->rect.bottomRight().y(), -8, -8);
 		p.fillRect(bottomRightRect, QBrush(Qt::red));
 	}
 }
@@ -117,14 +121,15 @@ void LkImageProcessWidget::mouseMoveEvent(QMouseEvent *event)
 {
     if (!m_activePair) return;
 
+	QPoint pt = QPoint(event->pos().x()/GetDx(),event->pos().y()/GetDy());
     QRect topLeftRect(m_activePair->rect.x(), m_activePair->rect.y(), 8, 8);
     QRect bottomRightRect(m_activePair->rect.bottomRight().x() - 8, m_activePair->rect.bottomRight().y() - 8, 8, 8);
 
-    if (topLeftRect.contains(event->pos())) {
+    if (topLeftRect.contains(pt)) {
         setCursor(Qt::SizeFDiagCursor);
-    } else if (bottomRightRect.contains(event->pos())) {
+    } else if (bottomRightRect.contains(pt)) {
         setCursor(Qt::SizeFDiagCursor);
-    } else if (m_activePair->rect.contains(event->pos())) {
+    } else if (m_activePair->rect.contains(pt)) {
         setCursor(Qt::SizeAllCursor);
     } else {
         setCursor(Qt::ArrowCursor);
@@ -132,16 +137,16 @@ void LkImageProcessWidget::mouseMoveEvent(QMouseEvent *event)
 
     if (m_startResize) {
         if (m_resizeFromTopLeft) {
-            m_activePair->rect.setTopLeft(event->pos());
+            m_activePair->rect.setTopLeft(pt);
         }
 
         if (m_resizeFromBottomRight){
-            m_activePair->rect.setBottomRight(event->pos());
+            m_activePair->rect.setBottomRight(pt);
         }
     }
 
     if (m_startMove) {
-        QPoint diff = QPoint(event->pos().x() - m_lastMovePoint.x(), event->pos().y() - m_lastMovePoint.y());
+        QPoint diff = QPoint(pt.x() - m_lastMovePoint.x(), pt.y() - m_lastMovePoint.y());
 
         int w = m_activePair->rect.width();
         int h = m_activePair->rect.height();
@@ -155,15 +160,16 @@ void LkImageProcessWidget::mouseMoveEvent(QMouseEvent *event)
     }
 
     update();
-    m_lastMovePoint = event->pos();
+    m_lastMovePoint = pt;
 }
 
 void LkImageProcessWidget::mousePressEvent(QMouseEvent *e)
 {
+	QPoint pt = QPoint(e->pos().x()/GetDx(),e->pos().y()/GetDy());
     int findIndex = -1;
     for (int i = m_sources.size() - 1; i >= 0; --i) {
         SourcePair & pair = m_sources[i];
-         if (pair.rect.contains(e->pos())) {
+         if (pair.rect.contains(pt)) {
              findIndex = i;
              break;
          }
@@ -180,12 +186,12 @@ void LkImageProcessWidget::mousePressEvent(QMouseEvent *e)
     QRect topLeftRect(m_activePair->rect.x(), m_activePair->rect.y(), 8, 8);
     QRect bottomRightRect(m_activePair->rect.bottomRight().x(), m_activePair->rect.bottomRight().y(), -8, -8);
 
-    if (m_activePair->rect.contains(e->pos())) {
-        if (topLeftRect.contains(e->pos()))
+    if (m_activePair->rect.contains(pt)) {
+        if (topLeftRect.contains(pt))
         {
             m_startResize = true;
             m_resizeFromTopLeft = true;
-        } else if (bottomRightRect.contains(e->pos())) {
+        } else if (bottomRightRect.contains(pt)) {
             m_startResize = true;
             m_resizeFromBottomRight = true;
         } else {
@@ -196,7 +202,7 @@ void LkImageProcessWidget::mousePressEvent(QMouseEvent *e)
         m_startMove = false;
     }
 
-    m_lastMovePoint = e->pos();
+    m_lastMovePoint = pt;
 }
 
 void LkImageProcessWidget::mouseReleaseEvent(QMouseEvent* /*e*/)
@@ -211,7 +217,7 @@ void LkImageProcessWidget::mouseDoubleClickEvent(QMouseEvent* /*e*/)
 {
     if (!m_activePair) return;
 
-    m_activePair->rect = rect();
+    m_activePair->rect = QRect(rect().x()/GetDx(),rect().y()/GetDy(),rect().width()/GetDx(),rect().height()/GetDy());
 
     updateSources();
     update();
@@ -263,8 +269,8 @@ void LkImageProcessWidget::onIncBtnClicked()
     if (r.isValid()) {
         int w =  r.width();
         int h = r.height();
-        r.setWidth(w + 1);
-        r.setHeight(h + 1);
+        r.setWidth(w + 5);
+        r.setHeight(h + 5);
     }
 
     update();
@@ -275,11 +281,17 @@ void LkImageProcessWidget::onDecBtnClicked()
     if (!m_activePair) return;
 
     QRect &r = m_activePair->rect;
-    if (r.isValid()) {
+    if (r.isValid() ) {
         int w =  r.width();
         int h = r.height();
-        r.setWidth(w - 1);
-        r.setHeight(h - 1);
+		if (w - 5 > 0 )
+		{
+			 r.setWidth(w - 5);
+		}
+		if (h - 5)
+		{
+			 r.setHeight(h - 5);
+		}
     }
 
     update();

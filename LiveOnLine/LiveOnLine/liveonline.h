@@ -14,7 +14,7 @@ class LkButton;
 class QPushButton;
 class LkSendTime;
 class QLabel;
-class QTopWidget;
+class LkTopWidget;
 class ShowTime;
 
 class LiveOnLine : public QWidget
@@ -61,7 +61,7 @@ private:
 	LkSendTime* m_pCurrentSendTime;			//获取发送时间
 	QString m_strSentStartTime;				//开始发送时间
 
-	QTopWidget* m_pTopWidget;				//上部标题栏
+	LkTopWidget* m_pTopWidget;				//上部标题栏
 	QWidget* m_pBottomWidget;				//上部标题栏
 
 };

@@ -10,12 +10,11 @@
 #include "opencv2/opencv.hpp"
 
 #include <QElapsedTimer>
-
-static const int Ble_Camera_Capture_Interval = 50;         // 20fps
+#include "LkConfigOpt.h"
 
 LkCameraSource::LkCameraSource(QObject *parent)
     : LkThread(parent)
-    , m_interval(Ble_Camera_Capture_Interval)
+    , m_interval(1000/LkConfigOpt::Instance()->n_Lk_Encoder_Fps)
     , m_cameraIndex(-1)
 {
 }

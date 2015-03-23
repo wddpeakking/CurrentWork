@@ -26,16 +26,11 @@ public:
     LkImageProcessThread(QObject * parent = 0);
 
     virtual void run();
-
-    void setResolution(int w, int h);
     void updateSources(QList<SourcePair> & sources);
-    void setInternal(int internal);
     LkImage *getImage();
     QQueue<LkImage *> getQueue();
 
 private:
-    int m_width;
-    int m_height;
 
     QMutex m_modifyOutputMutex;
     QMutex m_updateMutex;

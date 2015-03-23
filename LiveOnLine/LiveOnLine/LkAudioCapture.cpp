@@ -154,6 +154,7 @@ int LkAudioCapture::startCapture(int bitrate, int sampleRate, int channels, int 
         m_grabEngine->startStream();
     } catch (RtError& e) {
         e.printMessage();
+		log_error(e.getMessage().c_str());
         LkFree(m_grabEngine);
 
         return LK_AUDIO_DEVICE_OPEN_ERROR;

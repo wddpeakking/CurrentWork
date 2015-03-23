@@ -26,7 +26,7 @@ void LkSettingDlg::Init()
 	//this->setStyleSheet("background-color:rgb(255,255,255)");
 	//this->setWindowFlags(Qt::FramelessWindowHint);
 	//·Ö±æÂÊ
-	strVal<<"320x240"<<"480x360"<<"640x480"<<"800x600"<<"1024x768"<<"1280x800";
+	strVal<<"320x240"<<"480x360"<<"640x480"<<"800x600"<<"1024x768"<<"1280x800"<<"1920x1080";
 	ui.comboBox_LkFbl->addItems(strVal);
 	ui.comboBox_LkFbl->setCurrentText(QString("%1x%2").arg(LkConfigOpt::Instance()->size_Lk_Encoder_Scale.width()).arg(LkConfigOpt::Instance()->size_Lk_Encoder_Scale.height()));
 

@@ -27,7 +27,7 @@
 #include <QVariant>
 #include "LkButton.h"
 #include "LkSendTime.h"
-#include "QTopWidget.h"
+#include "LkTopWidget.h"
 
 #ifdef Q_OS_WIN
 #include <Dwmapi.h>
@@ -75,7 +75,7 @@ void LiveOnLine::Init()
 	}
 
 	//top new
-	m_pTopWidget = new QTopWidget(this);
+	m_pTopWidget = new LkTopWidget(this);
 	m_pTopWidget->setGeometry(0,0,nMainWndWidth,nMainWndHeight*0.05);
 	m_pTopWidget->setAutoFillBackground(true);
 	palette.setColor(QPalette::Background, g_TopColor);
@@ -90,7 +90,7 @@ void LiveOnLine::Init()
 	pBottomLable->setGeometry(0,0,m_pTopWidget->width()-(3*nMcWidth+50),m_pTopWidget->height());
 	pBottomLable->setStyleSheet("font-size:16px;color:#bbbbbb;font-weight:bold");
 	pBottomLable->setAlignment(Qt::AlignCenter);
-	pBottomLable->setText(QStringLiteral("当面淘直播客户端v_0.4"));
+	pBottomLable->setText(g_LogoText);
 
 	LkButton* pTextSetting = new LkButton(QPixmap("image/settting.png"),QPixmap("image/settting.png"),m_pTopWidget);
 	pTextSetting->setGeometry(m_pTopWidget->width()-(3*nMcWidth+50),5,nMcWidth,nMcHeight);
@@ -104,7 +104,7 @@ void LiveOnLine::Init()
 
 	LkButton* pTextMin = new LkButton(QPixmap("image/min.png"),QPixmap("image/min.png"),m_pTopWidget);
 	pTextMin->setGeometry(m_pTopWidget->width()-(2*nMcWidth+30),5,nMcWidth,nMcHeight);
-	connect(pTextMin,SIGNAL(pressWidget()),this,SLOT(showMinimized()));
+	connect(pTextMin,SIGNAL(releaseWidget()),this,SLOT(showMinimized()));
 	pTextMin->SetPressColor(g_TopColor);
 	
 	QLabel* pLabel1 = new QLabel(m_pTopWidget);
@@ -117,8 +117,6 @@ void LiveOnLine::Init()
 	connect(pTextClose,SIGNAL(pressWidget()),this,SLOT(close()));
 	pTextClose->SetPressColor(g_TopColor);
 
-	
-
 	//mid new
 	m_pImageProcessWidget = new LkImageProcessWidget(this);
 	m_pImageProcessWidget->setGeometry(1,nMainWndHeight*0.05+2,nMainWndWidth-2,nMainWndHeight*0.85-2);
@@ -129,7 +127,6 @@ void LiveOnLine::Init()
 	m_pBottomWidget = new QWidget(this);
 	m_pBottomWidget->setGeometry(0,nMainWndHeight*0.9,nMainWndWidth,nMainWndHeight*0.1-2);
 	m_pBottomWidget->setStyleSheet(GetStyle(g_BottomColor));
-
 
 
 	QList<LkButton*> pFunction;
@@ -271,11 +268,6 @@ void LiveOnLine::OnActionStartorEndRtmp()
 	{
 		m_pImageThread = new LkImageProcessThread(this);
 		m_pImageProcessWidget->setProcessThread(m_pImageThread);
-
-		QSize size = LkConfigOpt::Instance()->size_Lk_Encoder_Scale;
-		int nFps = LkConfigOpt::Instance()->n_Lk_Encoder_Fps;
-		m_pImageThread->setResolution(size.width(), size.height());
-		m_pImageThread->setInternal(1000 / nFps);
 
 		//启动声音采集线程
 		m_pAudioCaptureThread = new LkAudioCapture();

@@ -6,14 +6,12 @@
 #include "LkUtil.h"
 #include "LkAVUtil.h"
 #include "LkAVQueue.h"
+#include "LkConfigOpt.h"
 
 #include <QDateTime>
 #include <QElapsedTimer>
 #include <QElapsedTimer>
 
-static const int ImageProcess_Default_Width  = 320;
-static const int ImageProcess_Default_Height = 240;
-static const int ImageProcess_Default_Internal = 50;        // 20 fps
 static CvRect QRect2CvRect(const QRect &rect)
 {
     CvRect ret;
@@ -27,9 +25,7 @@ static CvRect QRect2CvRect(const QRect &rect)
 
 LkImageProcessThread::LkImageProcessThread(QObject *parent)
     : LkThread(parent)
-    , m_width(ImageProcess_Default_Width)
-    , m_height(ImageProcess_Default_Height)
-    , m_internal(ImageProcess_Default_Internal)
+    , m_internal(1000/LkConfigOpt::Instance()->n_Lk_Encoder_Fps)
     , m_dstImage(NULL)
 {
 }
@@ -37,13 +33,13 @@ LkImageProcessThread::LkImageProcessThread(QObject *parent)
 void LkImageProcessThread::run()
 {
     CvSize dstSize;
-    dstSize.width = m_width;
-    dstSize.height = m_height;
+    dstSize.width = LkConfigOpt::Instance()->size_Lk_Encoder_Scale.width();
+    dstSize.height = LkConfigOpt::Instance()->size_Lk_Encoder_Scale.height();
     IplImage* dstImg = cvCreateImage(dstSize, IPL_DEPTH_8U, 3);
     cvZero(dstImg);
     m_dstImage = dstImg;
 
-    QRect dstRect(0, 0, m_width, m_height);
+    QRect dstRect(0, 0, dstSize.width, dstSize.height);
 
     while (!m_stop) {
         QElapsedTimer elapsedTimer;
@@ -192,11 +188,7 @@ end:
     log_trace("LkImageProcessThread exit normally.");
 }
 
-void LkImageProcessThread::setResolution(int w, int h)
-{
-    m_width = w;
-    m_height = h;
-}
+
 
 void LkImageProcessThread::updateSources(QList<SourcePair> &sources)
 {
@@ -204,10 +196,6 @@ void LkImageProcessThread::updateSources(QList<SourcePair> &sources)
     m_sources = sources;
 }
 
-void LkImageProcessThread::setInternal(int internal)
-{
-    m_internal = internal;
-}
 
 LkImage *LkImageProcessThread::getImage()
 {

@@ -23,12 +23,10 @@ static	QString GetStyle(QColor color)
 	return QString("background-color:rgb(%1,%2,%3)").arg(color.red()).arg(color.green()).arg(color.blue());
 };
 
-
 //版本信息
-static QString g_Version = QStringLiteral("当面淘 Copyright|2007-2015 <a href = https://www.facebuy.com >https://www.facebuy.com</a>");
-static QString g_LogoText = QStringLiteral("当面淘\n直播客户端v_0.3");
-#define LK_VERSION_STR     "0.3"
-#define LK_VERSION         (0x000310)
+static QString g_LogoText = QStringLiteral("当面淘直播客户端v_0.4");
+#define LK_VERSION_STR     "0.4"
+#define LK_VERSION         (0x000410)
 #define LK_AUTHORS         "linekong"
 #define LK_NAME            "DMT" LK_VERSION_STR"(https://www.linekong.com)"
 

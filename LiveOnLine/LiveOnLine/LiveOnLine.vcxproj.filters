@@ -272,14 +272,14 @@
     <ClCompile Include="GeneratedFiles\Release\moc_LkSendTime.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="QTopWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_QTopWidget.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_LkTopWidget.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_QTopWidget.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_LkTopWidget.cpp">
       <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="LkTopWidget.cpp">
+      <Filter>Source Files\dialog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -346,8 +346,8 @@
     <CustomBuild Include="LkSendTime.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="QTopWidget.h">
-      <Filter>Header Files</Filter>
+    <CustomBuild Include="LkTopWidget.h">
+      <Filter>Header Files\dialog</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
